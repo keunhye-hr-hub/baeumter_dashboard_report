@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <title>배움터 법인별 학습현황</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --ink:    #1a1a18;
+      --t2:     #4a4a46;
+      --t3:     #8c8c88;
+      --t4:     #b8b8b4;
+      --border: #d8d8d4;
+      --bg:     #f8f8f6;
+      --g1:     #b0b0aa;
+      --g2:     #c8c8c2;
+      --g3:     #dcdcd6;
+      --g4:     #ededea;
+    }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body {
+      font-family:'Pretendard', sans-serif;
+      background:#c4c4c0;
+      display:flex;
+      justify-content:center;
+      padding:40px 16px;
+    }
+
+    /* A4 세로 */
+    .page {
+      width: 1122px;
+      min-height: 794px;
+      background: #fff;
+      box-shadow: 0 2px 28px rgba(0,0,0,0.12);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── 헤더 (종합보고서와 동일) ── */
+    .cover {
+      padding: 24px 52px 20px;
+      border-bottom: 3px solid var(--t3);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      min-height: 130px;
+    }
+
+    .cover-tag {
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--t4);
+      margin-bottom: 12px;
+    }
+
+    .cover-quarter {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--t3);
+      margin-bottom: 6px;
+      letter-spacing: 0.04em;
+    }
+
+    .cover-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.5px;
+      line-height: 1.3;
+      margin-bottom: 6px;
+    }
+
+    .cover-sub {
+      font-size: 10px;
+      color: var(--t4);
+      letter-spacing: 0.1em;
+    }
+
+    .ci-label {
+      font-size: 8.5px;
+      font-weight: 600;
+      color: var(--t4);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+
+    /* ── 본문 ── */
+    .body {
+      flex: 1;
+      padding: 32px 52px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* ── 섹션 제목 ── */
+    .sec-header {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1.5px solid var(--t3);
+    }
+
+    .sec-num {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--t4);
+      letter-spacing: 0.05em;
+    }
+
+    .sec-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.2px;
+    }
+
+    /* ── 메인 테이블 ── */
+    .main-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    /* 행 헤더 (지표명) */
+    .main-table .row-hdr {
+      padding: 9px 12px;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--t3);
+      text-align: left;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      width: 100px;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    .main-table .row-hdr.group {
+      font-size: 9px;
+      color: var(--t4);
+      background: #f2f2f0;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* 열 헤더 (법인명) */
+    .main-table thead tr {
+      background: var(--t3);
+    }
+
+    .main-table th {
+      padding: 9px 8px;
+      font-size: 10px;
+      font-weight: 700;
+      color: white;
+      text-align: center;
+      letter-spacing: 0.03em;
+      border-right: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .main-table th:first-child {
+      background: var(--bg);
+      color: transparent;
+      border-right: 1px solid var(--border);
+    }
+
+    /* 데이터 셀 */
+    .main-table td {
+      padding: 9px 8px;
+      font-size: 11px;
+      color: var(--ink);
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    .main-table td:last-child { border-right: none; }
+    .main-table .row-hdr:last-child { border-right: 1px solid var(--border); }
+
+    .main-table tbody tr:last-child td,
+    .main-table tbody tr:last-child .row-hdr { border-bottom: 2px solid var(--t3); }
+
+    .main-table tbody tr:nth-child(even) td { background: var(--bg); }
+    .main-table tbody tr:nth-child(even) .row-hdr { background: #f0f0ee; }
+
+    .bold { font-weight: 700; }
+    .muted { color: var(--t3); font-size: 10px; }
+
+    /* ── 레벨 분포 바 ── */
+    .level-bar {
+      display: flex;
+      height: 14px;
+      border-radius: 3px;
+      overflow: hidden;
+      gap: 1px;
+      margin-bottom: 4px;
+    }
+
+    .lb-seg {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 7.5px;
+      font-weight: 700;
+      color: rgba(0,0,0,0.4);
+      min-width: 4px;
+      transition: flex 0.3s;
+    }
+
+    .level-legend {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 3px;
+    }
+
+    .ll-item {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      font-size: 7.5px;
+      color: var(--t3);
+    }
+
+    .ll-dot {
+      width: 5px; height: 5px;
+      border-radius: 1px;
+      flex-shrink: 0;
+    }
+
+    /* ── 레벨 범례 (하단) ── */
+    .level-note {
+      display: flex;
+      gap: 16px;
+      padding: 10px 0 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .ln-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 9.5px;
+      color: var(--t2);
+    }
+
+    .ln-badge {
+      width: 10px; height: 10px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    /* ── 푸터 ── */
+    .ftr {
+      padding: 10px 52px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .ftr-left { font-size: 9.5px; font-weight: 700; color: var(--ink); }
+    .ftr-right { font-size: 8.5px; color: var(--t4); }
+
+    @media print {
+      body { background: white; padding: 0; }
+      .page { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- 헤더 -->
+  <div class="cover">
+    <div>
+      <div class="cover-tag">Learning Management System — Quarterly Report</div>
+      <div class="cover-quarter">2026년 2분기</div>
+      <div class="cover-title">법인별 학습현황</div>
+      <div class="cover-sub">2026.04.01 ~ 2026.06.30 &nbsp;·&nbsp; 한맥그룹 HR</div>
+    </div>
+  </div>
+
+  <!-- 본문 -->
+  <div class="body">
+
+    <div class="sec-header">
+      <div class="sec-num">01</div>
+      <div class="sec-title">법인별 학습현황</div>
+    </div>
+
+    <!-- 메인 테이블 -->
+    <table class="main-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>한맥기술</th>
+          <th>삼안</th>
+          <th>한라</th>
+          <th>장헌산업</th>
+          <th>바론컨설턴트</th>
+          <th>PTC</th>
+          <th>(주)장헌</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <!-- 접속 현황 -->
+        <tr>
+          <td class="row-hdr group">접속 현황</td>
+          <td colspan="7" style="background:var(--bg);border-bottom:1px solid var(--border);"></td>
+        </tr>
+        <tr>
+          <td class="row-hdr">전체 인원</td>
+          <td class="muted">120명</td>
+          <td class="muted">95명</td>
+          <td class="muted">78명</td>
+          <td class="muted">62명</td>
+          <td class="muted">48명</td>
+          <td class="muted">35명</td>
+          <td class="muted">41명</td>
+        </tr>
+        <tr>
+          <td class="row-hdr">접속률</td>
+          <td class="bold">82%</td>
+          <td class="bold">57%</td>
+          <td class="bold">72%</td>
+          <td class="bold">40%</td>
+          <td class="bold">79%</td>
+          <td class="bold">74%</td>
+          <td class="bold">54%</td>
+        </tr>
+        <tr>
+          <td class="row-hdr">전분기 대비</td>
+          <td style="font-size:10px; color:var(--t2);">▲8%p</td>
+          <td style="font-size:10px; color:var(--t2);">—</td>
+          <td style="font-size:10px; color:var(--t2);">▲11%p</td>
+          <td style="font-size:10px; color:var(--t2);">▼6%p</td>
+          <td style="font-size:10px; color:var(--t2);">▲5%p</td>
+          <td style="font-size:10px; color:var(--t2);">▲3%p</td>
+          <td style="font-size:10px; color:var(--t2);">▼4%p</td>
+        </tr>
+
+        <!-- 법정교육 -->
+        <tr>
+          <td class="row-hdr group">법정교육</td>
+          <td colspan="7" style="background:var(--bg);border-bottom:1px solid var(--border);"></td>
+        </tr>
+        <tr>
+          <td class="row-hdr">이수율</td>
+          <td class="bold">00%</td>
+          <td class="bold">00%</td>
+          <td class="bold">00%</td>
+          <td class="bold">00%</td>
+          <td class="bold">00%</td>
+          <td class="bold">00%</td>
+          <td class="bold">00%</td>
+        </tr>
+        <tr>
+          <td class="row-hdr">미이수 인원</td>
+          <td class="muted">00명</td>
+          <td class="muted">00명</td>
+          <td class="muted">00명</td>
+          <td class="muted">00명</td>
+          <td class="muted">00명</td>
+          <td class="muted">00명</td>
+          <td class="muted">00명</td>
+        </tr>
+
+        <!-- 마이클래스 -->
+        <tr>
+          <td class="row-hdr group">마이클래스</td>
+          <td colspan="7" style="background:var(--bg);border-bottom:1px solid var(--border);"></td>
+        </tr>
+        <tr>
+          <td class="row-hdr">목표 설정률</td>
+          <td class="bold">00%</td>
+          <td class="bold">00%</td>
+          <td class="bold">00%</td>
+          <td class="bold">00%</td>
+          <td class="bold">00%</td>
+          <td class="bold">00%</td>
+          <td class="bold">00%</td>
+        </tr>
+        <tr>
+          <td class="row-hdr">학습률</td>
+          <td class="bold">00%</td>
+          <td class="bold">00%</td>
+          <td class="bold">00%</td>
+          <td class="bold">00%</td>
+          <td class="bold">00%</td>
+          <td class="bold">00%</td>
+          <td class="bold">00%</td>
+        </tr>
+
+        <!-- 학습자 레벨 -->
+        <tr>
+          <td class="row-hdr group">학습자 레벨</td>
+          <td colspan="7" style="background:var(--bg);border-bottom:1px solid var(--border);"></td>
+        </tr>
+        <tr>
+          <td class="row-hdr">분포</td>
+          <!-- 한맥기술 -->
+          <td style="padding:7px 6px;">
+            <div class="level-bar">
+              <div class="lb-seg" style="flex:12; background:var(--g1);">12</div>
+              <div class="lb-seg" style="flex:28; background:var(--g2);">28</div>
+              <div class="lb-seg" style="flex:38; background:var(--g3);">38</div>
+              <div class="lb-seg" style="flex:22; background:var(--g4);">22</div>
+            </div>
+            <div class="level-legend">
+              <div class="ll-item"><div class="ll-dot" style="background:var(--g1);"></div>M·12</div>
+              <div class="ll-item"><div class="ll-dot" style="background:var(--g2);"></div>E·28</div>
+              <div class="ll-item"><div class="ll-dot" style="background:var(--g3);"></div>L·38</div>
+              <div class="ll-item"><div class="ll-dot" style="background:var(--g4); border:1px solid var(--border);"></div>R·22</div>
+            </div>
+          </td>
+          <!-- 삼안 -->
+          <td style="padding:7px 6px;">
+            <div class="level-bar">
+              <div class="lb-seg" style="flex:5; background:var(--g1);">5</div>
+              <div class="lb-seg" style="flex:18; background:var(--g2);">18</div>
+              <div class="lb-seg" style="flex:32; background:var(--g3);">32</div>
+              <div class="lb-seg" style="flex:45; background:var(--g4);">45</div>
+            </div>
+            <div class="level-legend">
+              <div class="ll-item"><div class="ll-dot" style="background:var(--g1);"></div>M·5</div>
+              <div class="ll-item"><div class="ll-dot" style="background:var(--g2);"></div>E·18</div>
+              <div class="ll-item"><div class="ll-dot" style="background:var(--g3);"></div>L·32</div>
+              <div class="ll-item"><div class="ll-dot" style="background:var(--g4); border:1px solid var(--border);"></div>R·45</div>
+            </div>
+          </td>
+          <!-- 한라 -->
+          <td style="padding:7px 6px;">
+            <div class="level-bar">
+              <div class="lb-seg" style="flex:8; background:var(--g1);">8</div>
+              <div class="lb-seg" style="flex:22; background:var(--g2);">22</div>
+              <div class="lb-seg" style="flex:30; background:var(--g3);">30</div>
+              <div class="lb-seg" style="flex:40; background:var(--g4);">40</div>
+            </div>
+            <div class="level-legend">
+              <div class="ll-item"><div class="ll-dot" style="background:var(--g1);"></div>M·8</div>
+              <div class="ll-item"><div class="ll-dot" style="background:var(--g2);"></div>E·22</div>
+              <div class="ll-item"><div class="ll-dot" style="background:var(--g3);"></div>L·30</div>
+              <div class="ll-item"><div class="ll-dot" style="background:var(--g4); border:1px solid var(--border);"></div>R·40</div>
+            </div>
+          </td>
+          <!-- 장헌산업 -->
+          <td style="padding:7px 6px;">
+            <div class="level-bar">
+              <div class="lb-seg" style="flex:3; background:var(--g1);">3</div>
+              <div class="lb-seg" style="flex:10; background:var(--g2);">10</div>
+              <div class="lb-seg" style="flex:20; background:var(--g3);">20</div>
+              <div class="lb-seg" style="flex:67; background:var(--g4);">67</div>
+            </div>
+            <div class="level-legend">
+              <div class="ll-item"><div class="ll-dot" style="background:var(--g1);"></div>M·3</div>
+              <div class="ll-item"><div class="ll-dot" style="background:var(--g2);"></div>E·10</div>
+              <div class="ll-item"><div class="ll-dot" style="background:var(--g3);"></div>L·20</div>
+              <div class="ll-item"><div class="ll-dot" style="background:var(--g4); border:1px solid var(--border);"></div>R·67</div>
+            </div>
+          </td>
+          <!-- 바론컨설턴트 -->
+          <td style="padding:7px 6px;">
+            <div class="level-bar">
+              <div class="lb-seg" style="flex:15; background:var(--g1);">15</div>
+              <div class="lb-seg" style="flex:25; background:var(--g2);">25</div>
+              <div class="lb-seg" style="flex:35; background:var(--g3);">35</div>
+              <div class="lb-seg" style="flex:25; background:var(--g4);">25</div>
+            </div>
+            <div class="level-legend">
+              <div class="ll-item"><div class="ll-dot" style="background:var(--g1);"></div>M·15</div>
+              <div class="ll-item"><div class="ll-dot" style="background:var(--g2);"></div>E·25</div>
+              <div class="ll-item"><div class="ll-dot" style="background:var(--g3);"></div>L·35</div>
+              <div class="ll-item"><div class="ll-dot" style="background:var(--g4); border:1px solid var(--border);"></div>R·25</div>
+            </div>
+          </td>
+          <!-- PTC -->
+          <td style="padding:7px 6px;">
+            <div class="level-bar">
+              <div class="lb-seg" style="flex:10; background:var(--g1);">10</div>
+              <div class="lb-seg" style="flex:20; background:var(--g2);">20</div>
+              <div class="lb-seg" style="flex:40; background:var(--g3);">40</div>
+              <div class="lb-seg" style="flex:30; background:var(--g4);">30</div>
+            </div>
+            <div class="level-legend">
+              <div class="ll-item"><div class="ll-dot" style="background:var(--g1);"></div>M·10</div>
+              <div class="ll-item"><div class="ll-dot" style="background:var(--g2);"></div>E·20</div>
+              <div class="ll-item"><div class="ll-dot" style="background:var(--g3);"></div>L·40</div>
+              <div class="ll-item"><div class="ll-dot" style="background:var(--g4); border:1px solid var(--border);"></div>R·30</div>
+            </div>
+          </td>
+          <!-- (주)장헌 -->
+          <td style="padding:7px 6px;">
+            <div class="level-bar">
+              <div class="lb-seg" style="flex:7; background:var(--g1);">7</div>
+              <div class="lb-seg" style="flex:15; background:var(--g2);">15</div>
+              <div class="lb-seg" style="flex:28; background:var(--g3);">28</div>
+              <div class="lb-seg" style="flex:50; background:var(--g4);">50</div>
+            </div>
+            <div class="level-legend">
+              <div class="ll-item"><div class="ll-dot" style="background:var(--g1);"></div>M·7</div>
+              <div class="ll-item"><div class="ll-dot" style="background:var(--g2);"></div>E·15</div>
+              <div class="ll-item"><div class="ll-dot" style="background:var(--g3);"></div>L·28</div>
+              <div class="ll-item"><div class="ll-dot" style="background:var(--g4); border:1px solid var(--border);"></div>R·50</div>
+            </div>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <!-- 레벨 범례 -->
+    <div class="level-note">
+      <div class="ln-item"><div class="ln-badge" style="background:var(--g1);"></div><strong>Master</strong> — 상위 학습자</div>
+      <div class="ln-item"><div class="ln-badge" style="background:var(--g2);"></div><strong>Elite</strong> — 우수 학습자</div>
+      <div class="ln-item"><div class="ln-badge" style="background:var(--g3);"></div><strong>Learner</strong> — 일반 학습자</div>
+      <div class="ln-item"><div class="ln-badge" style="background:var(--g4); border:1px solid var(--border);"></div><strong>Rookie</strong> — 초기 학습자</div>
+      <div style="margin-left:auto; font-size:8.5px; color:var(--t4);">분포 수치는 전체 인원 대비 %</div>
+    </div>
+
+  </div>
+
+  <!-- 푸터 -->
+  <div class="ftr">
+    <div class="ftr-left">배움터 &nbsp;·&nbsp; 한맥그룹 HR</div>
+    <div class="ftr-right">2026년 2분기 (2026.04.01~06.30) 기준</div>
+  </div>
+
+</div>
+</body>
+</html>

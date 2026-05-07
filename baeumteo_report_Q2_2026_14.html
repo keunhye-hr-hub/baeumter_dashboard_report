@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <title>배움터 2분기 학습 결과보고서</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --ink:    #1a1a18;
+      --t2:     #4a4a46;
+      --t3:     #8c8c88;
+      --t4:     #b8b8b4;
+      --border: #d8d8d4;
+      --bg:     #f8f8f6;
+    }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body {
+      font-family:'Pretendard', sans-serif;
+      background:#c4c4c0;
+      display:flex;
+      justify-content:center;
+      padding:40px 16px;
+    }
+
+    /* A4 세로 */
+    .page {
+      width: 794px;
+      min-height: 1123px;
+      background: #fff;
+      box-shadow: 0 2px 28px rgba(0,0,0,0.12);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* ── 헤더 커버 ── */
+    .cover {
+      padding: 24px 52px 20px;
+      border-bottom: 3px solid var(--t3);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .cover-tag {
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--t4);
+      margin-bottom: 12px;
+    }
+
+    .cover-quarter {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--t3);
+      margin-bottom: 6px;
+      letter-spacing: 0.04em;
+    }
+
+    .cover-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.5px;
+      line-height: 1.3;
+      margin-bottom: 6px;
+    }
+
+    .cover-sub {
+      font-size: 10px;
+      color: var(--t4);
+      letter-spacing: 0.1em;
+    }
+
+    .cover-org {
+      position: absolute;
+      right: 52px;
+      bottom: 40px;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--t3);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── 본문 ── */
+    .body {
+      flex: 1;
+      padding: 36px 52px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    /* ── 섹션 ── */
+    .section {}
+
+    .sec-header {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1.5px solid var(--t3);
+    }
+
+    .sec-num {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--t4);
+      letter-spacing: 0.05em;
+    }
+
+    .sec-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.2px;
+    }
+
+    .sec-desc {
+      font-size: 10px;
+      color: var(--t3);
+      margin-bottom: 12px;
+      line-height: 1.7;
+    }
+
+    /* ── 불릿 수치 ── */
+    .bullet-list {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-bottom: 14px;
+    }
+
+    .bullet-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--t2);
+      line-height: 1.6;
+    }
+
+    .bullet-mark {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--t3);
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+
+    .bullet-item strong {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    /* ── 테이블 ── */
+    .sub-title {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--t3);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      margin-top: 2px;
+    }
+
+    .rt {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .rt thead tr {
+      background: var(--t3);
+    }
+
+    .rt th {
+      padding: 7px 12px;
+      font-size: 9.5px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.85);
+      text-align: center;
+      letter-spacing: 0.04em;
+    }
+
+    .rt th.left { text-align: left; }
+
+    .rt tbody tr {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .rt tbody tr:nth-child(even) { background: var(--bg); }
+    .rt tbody tr:last-child { border-bottom: 2px solid var(--t3); }
+
+    .rt td {
+      padding: 7px 12px;
+      font-size: 11px;
+      color: var(--ink);
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .rt td.left { text-align: left; }
+    .rt td.bold { font-weight: 700; }
+    .rt td.label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--t3);
+      background: var(--bg);
+      text-align: left;
+      width: 90px;
+    }
+
+    /* ── 카테고리 수치 인라인 ── */
+    .cat-inline {
+      display: flex;
+      gap: 0;
+      margin-bottom: 14px;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .cat-inline-item {
+      flex: 1;
+      padding: 10px 14px;
+      border-right: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .cat-inline-item:last-child { border-right: none; }
+
+    .ci-label {
+      font-size: 9px;
+      font-weight: 600;
+      color: var(--t4);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .ci-val {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.8px;
+      line-height: 1;
+    }
+
+    .ci-val sup { font-size: 10px; font-weight: 400; }
+
+    /* ── TOP3 ── */
+    .top3 {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      overflow: hidden;
+      margin-top: 14px;
+    }
+
+    .top3-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .top3-item:last-child { border-bottom: none; }
+    .top3-item:nth-child(even) { background: var(--bg); }
+
+    .top3-rank {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--t4);
+      width: 18px;
+      flex-shrink: 0;
+    }
+
+    .top3-name {
+      flex: 1;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    .top3-cat {
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 20px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--t2);
+    }
+
+    .top3-views {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--t2);
+      min-width: 48px;
+      text-align: right;
+    }
+
+    /* ── 푸터 ── */
+    .ftr {
+      padding: 10px 52px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .ftr-left { font-size: 9.5px; font-weight: 700; color: var(--ink); }
+    .ftr-right { font-size: 8.5px; color: var(--t4); }
+
+    @media print {
+      body { background: white; padding: 0; }
+      .page { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- 커버 헤더 -->
+  <div class="cover" style="align-items:flex-start; min-height:130px;">
+    <div>
+      <div class="cover-tag">Learning Management System — Quarterly Report</div>
+      <div class="cover-quarter">2026년 2분기</div>
+      <div class="cover-title">배움터 학습 결과보고서</div>
+      <div class="cover-sub">2026.04.01 ~ 2026.06.30 &nbsp;·&nbsp; 한맥그룹 HR</div>
+    </div>
+    <div style="display:flex; flex-direction:column; justify-content:flex-end; align-self:flex-end; padding-bottom:4px; padding-right:4px;">
+      <div style="display:flex; gap:28px;">
+        <div>
+          <div class="ci-label">전체 학습자</div>
+          <div style="font-size:16px; font-weight:800; color:var(--ink); letter-spacing:-0.8px; line-height:1.2; white-space:nowrap;">3,000<span style="font-size:10px; font-weight:400;">명</span></div>
+          <div style="font-size:8px; color:var(--t4); margin-top:1px; white-space:nowrap;">7개 법인</div>
+        </div>
+        <div>
+          <div class="ci-label">전체 접속률</div>
+          <div style="font-size:16px; font-weight:800; color:var(--ink); letter-spacing:-0.8px; line-height:1.2; white-space:nowrap;">72<span style="font-size:10px; font-weight:400;">%</span></div>
+          <div style="font-size:8px; color:var(--t4); margin-top:1px; white-space:nowrap;">▲12%p 전분기</div>
+        </div>
+        <div>
+          <div class="ci-label">법정교육 이수율</div>
+          <div style="font-size:16px; font-weight:800; color:var(--ink); letter-spacing:-0.8px; line-height:1.2; white-space:nowrap;">78<span style="font-size:10px; font-weight:400;">%</span></div>
+          <div style="font-size:8px; color:var(--t4); margin-top:1px; white-space:nowrap;">▲5%p 전분기</div>
+        </div>
+        <div>
+          <div class="ci-label">마이클래스 설정률</div>
+          <div style="font-size:16px; font-weight:800; color:var(--ink); letter-spacing:-0.8px; line-height:1.2; white-space:nowrap;">72.5<span style="font-size:10px; font-weight:400;">%</span></div>
+          <div style="font-size:8px; color:var(--t4); margin-top:1px; white-space:nowrap;">▲8%p 전분기</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 본문 -->
+  <div class="body">
+
+    <!-- 1. 접속 현황 -->
+    <div class="section">
+      <div class="sec-header">
+        <div class="sec-num">01</div>
+        <div class="sec-title">접속 현황</div>
+      </div>
+
+      <div class="bullet-list">
+        <div class="bullet-item"><div class="bullet-mark"></div><span>분기 접속자: <strong>000명</strong> &nbsp;/&nbsp; 미접속자: <strong>00명</strong></span></div>
+        <div class="bullet-item"><div class="bullet-mark"></div><span>전분기 대비: <strong>00%p (증감)</strong> &nbsp;/&nbsp; 누적 접속률: <strong>00%</strong></span></div>
+        <div class="bullet-item"><div class="bullet-mark"></div><span>일일 평균 방문자 수 (DAU): <strong>00명</strong></span></div>
+        <div class="bullet-item"><div class="bullet-mark"></div><span>주요 접속 시간대: <strong>오전 09:00~10:00</strong> (업무 시작 전)</span></div>
+      </div>
+
+      <div class="sub-title">법인별 접속자 현황</div>
+      <table class="rt">
+        <thead>
+          <tr>
+            <th class="left">구분</th>
+            <th>한맥기술</th>
+            <th>삼안</th>
+            <th>한라</th>
+            <th>장헌산업</th>
+            <th>바론컨설턴트</th>
+            <th>PTC</th>
+            <th>(주)장헌</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="label">전체 인원</td>
+            <td>00명</td>
+            <td>00명</td>
+            <td>00명</td>
+            <td>00명</td>
+            <td>00명</td>
+            <td>00명</td>
+            <td>00명</td>
+          </tr>
+          <tr>
+            <td class="label">접속자</td>
+            <td>00명</td>
+            <td>00명</td>
+            <td>00명</td>
+            <td>00명</td>
+            <td>00명</td>
+            <td>00명</td>
+            <td>00명</td>
+          </tr>
+          <tr>
+            <td class="label">접속률</td>
+            <td class="bold">00%</td>
+            <td class="bold">00%</td>
+            <td class="bold">00%</td>
+            <td class="bold">00%</td>
+            <td class="bold">00%</td>
+            <td class="bold">00%</td>
+            <td class="bold">00%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 2. 법정의무교육 현황 -->
+    <div class="section">
+      <div class="sec-header">
+        <div class="sec-num">02</div>
+        <div class="sec-title">법정의무교육 현황</div>
+      </div>
+
+      <div class="bullet-list">
+        <div class="bullet-item"><div class="bullet-mark"></div><span>전체 이수율: <strong>00%</strong></span></div>
+        <div class="bullet-item"><div class="bullet-mark"></div><span>미이수 인원: 총 <strong>00명</strong> (대상자 000명 중)</span></div>
+      </div>
+
+      <div class="sub-title">법인별 이수 현황</div>
+      <table class="rt">
+        <thead>
+          <tr>
+            <th>한맥기술</th>
+            <th>삼안</th>
+            <th>한라</th>
+            <th>장헌산업</th>
+            <th>바론컨설턴트</th>
+            <th>PTC</th>
+            <th>(주)장헌</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="bold">00%</td>
+            <td class="bold">00%</td>
+            <td class="bold">00%</td>
+            <td class="bold">00%</td>
+            <td class="bold">00%</td>
+            <td class="bold">00%</td>
+            <td class="bold">00%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 3. 학습 현황 -->
+    <div class="section">
+      <div class="sec-header">
+        <div class="sec-num">03</div>
+        <div class="sec-title">학습 현황</div>
+      </div>
+
+      <!-- 카테고리별 학습률 - 양끝선 없이 -->
+      <div class="sub-title">카테고리별 학습률</div>
+      <div style="display:flex; gap:0; border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+        <div class="cat-inline-item" style="border-left:none; border-right:1px solid var(--border);">
+          <div class="ci-label">마이클래스</div>
+          <div class="ci-val">00<sup>%</sup></div>
+        </div>
+        <div class="cat-inline-item" style="border-right:1px solid var(--border);">
+          <div class="ci-label">인사이트</div>
+          <div class="ci-val">00<sup>%</sup></div>
+        </div>
+        <div class="cat-inline-item" style="border-right:1px solid var(--border);">
+          <div class="ci-label">리더십</div>
+          <div class="ci-val">00<sup>%</sup></div>
+        </div>
+        <div class="cat-inline-item" style="border-right:none;">
+          <div class="ci-label">비즈트렌드</div>
+          <div class="ci-val">00<sup>%</sup></div>
+        </div>
+      </div>
+
+      <!-- 마이클래스 목표별 -->
+      <div class="sub-title" style="margin-top:14px;">마이클래스 분기 학습률</div>
+      <table class="rt">
+        <thead>
+          <tr>
+            <th class="left">분기 목표</th>
+            <th class="left">목표 내용</th>
+            <th>목표 설정률</th>
+            <th>학습률</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="label">목표 1</td>
+            <td class="left">AI 활용</td>
+            <td class="bold">00%</td>
+            <td class="bold">00%</td>
+          </tr>
+          <tr>
+            <td class="label">목표 2</td>
+            <td class="left">디지털 트랜스포메이션</td>
+            <td class="bold">00%</td>
+            <td class="bold">00%</td>
+          </tr>
+          <tr>
+            <td class="label">목표 3</td>
+            <td class="left">비즈니스 매너</td>
+            <td class="bold">00%</td>
+            <td class="bold">00%</td>
+          </tr>
+          <tr>
+            <td class="label">목표 4</td>
+            <td class="left">자기관리 / 건강</td>
+            <td class="bold">00%</td>
+            <td class="bold">00%</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="font-size:9px;color:var(--t4);margin-top:5px;margin-bottom:2px;">※ 설정된 8개 목표 중 해당 분기 목표치 표시</div>
+
+      <!-- TOP 3 - 마이클래스 테이블 형식과 동일 -->
+      <div class="sub-title" style="margin-top:14px;">가장 많이 본 콘텐츠 TOP 3</div>
+      <table class="rt">
+        <thead>
+          <tr>
+            <th class="left" style="width:40px;">순위</th>
+            <th class="left">콘텐츠 제목</th>
+            <th>카테고리</th>
+            <th>조회수</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="label">1</td>
+            <td class="left">콘텐츠 제목 A</td>
+            <td>인사이트</td>
+            <td class="bold">000회</td>
+          </tr>
+          <tr>
+            <td class="label">2</td>
+            <td class="left">콘텐츠 제목 B</td>
+            <td>마이클래스</td>
+            <td class="bold">000회</td>
+          </tr>
+          <tr>
+            <td class="label">3</td>
+            <td class="left">콘텐츠 제목 C</td>
+            <td>비즈트렌드</td>
+            <td class="bold">000회</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+  </div>
+
+  <!-- 푸터 -->
+  <div class="ftr">
+    <div class="ftr-left">배움터 &nbsp;·&nbsp; 한맥그룹 HR</div>
+    <div class="ftr-right">2026년 2분기 (2026.04.01~06.30) 기준</div>
+  </div>
+
+</div>
+</body>
+</html>
